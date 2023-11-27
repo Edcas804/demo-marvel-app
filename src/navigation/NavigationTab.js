@@ -25,7 +25,7 @@ export default function NavigationTab() {
         name="home"
         component={NavigationHomeStack}
         options={{
-          tabBarLabel: 'Inicio',
+          tabBarLabel: '',
           tabBarIcon: () => renderLogo(),
           headerShown: false,
         }}

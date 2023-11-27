@@ -1,27 +1,24 @@
-import { Text, StyleSheet, View, Image } from 'react-native'
+import { StyleSheet } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { getCharacters } from '../services/api'
 import HeroList from '../components/HeroList'
-import { StatusBar } from 'expo-status-bar'
 
 export default function HomeScreen() {
   const [heroes, setHeroes] = useState([])
+  const [page, setPage] = useState(1)
   useEffect(() => {
-    getCharacters()
+    getCharacters({ page })
       .then((data) => {
-        console.log(`${data}`)
-        setHeroes(data)
+        setHeroes((state) => [...state, ...data])
       })
       .finally(() => console.log('finalizado'))
-    return () => {
-      console.log('desmontado')
-    }
-  }, [])
+    return () => {}
+  }, [page])
 
   return (
     <SafeAreaView style={styles.container}>
-      <HeroList heroes={heroes} />
+      <HeroList heroes={heroes} setPage={setPage} />
     </SafeAreaView>
   )
 }
@@ -32,5 +29,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: '#000',
   },
 })
